@@ -1,0 +1,721 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mui/toolpad/v0.11.0/docs/schemas/v1/definitions.json#properties/Page
+
+apiVersion: v1
+kind: page
+spec:
+  alias:
+    - nxOIZvJ
+  title: Default page
+  content:
+    - component: Text
+      name: textAjouterUnLivre
+      props:
+        value: Ajouter un livre
+        variant: h3
+      layout:
+        horizontalAlign: center
+    - component: TextField
+      name: AjouterTitre
+      props:
+        label: Titre
+        isRequired: true
+    - component: TextField
+      name: AjouterAuteur
+      props:
+        label: Auteur
+        isRequired: true
+    - component: TextField
+      name: AjouterIsbn
+      props:
+        label: ISBN
+        isRequired: true
+    - component: TextField
+      name: AjouterDescription
+      props:
+        label: Description
+        fullWidth: true
+    - component: Select
+      name: selectAjoutLivreDisponible
+      props:
+        label: Statut
+        defaultValue: 'true'
+        options:
+          - value: 'true'
+            label: Disponible
+          - value: 'false'
+            label: Indisponible
+    - component: Button
+      name: ButtonAjouter
+      props:
+        content: Ajouter a la bibliotheque
+        disabled:
+          $$jsExpression:
+            AjouterTitre.value ==""  || AjouterAuteur.value == "" ||
+            AjouterIsbn.value == ""
+        onClick:
+          $$jsExpressionAction: AjouterLivre.call().then(() => GetLivres.refetch())
+    - component: Text
+      name: textListeDeLivre
+      props:
+        value: Liste des livres
+        variant: h4
+      layout:
+        horizontalAlign: center
+    - component: Button
+      name: buttonRafraichir
+      props:
+        content: Rafraichir la liste
+        onClick:
+          $$jsExpressionAction: GetLivres.refetch()
+    - component: Checkbox
+      name: checkboxAfficherTousLesLivres
+      props:
+        mode: checkBox
+        label: Tous
+        color: primary
+        size: medium
+        fullWidth: false
+      layout:
+        horizontalAlign: end
+    - component: DataGrid
+      name: ListeDeLivre
+      props:
+        rows:
+          $$jsExpression: GetLivres.data.livres
+        columns:
+          - field: titre
+            type: string
+            width: 182.9971466064453
+          - field: auteur
+            type: string
+            width: 173.9943084716797
+          - field: isbn
+            type: string
+            width: 162
+          - field: description
+            type: string
+            width: 317.9630432128906
+          - field: disponible
+            type: boolean
+            width: 159.99432373046875
+        density: standard
+        hideToolbar: false
+        loading: false
+    - component: Button
+      name: buttonSupprimerLivre
+      props:
+        content: Supprimer le livre
+        disabled:
+          $$jsExpression: ListeDeLivre.selection == null
+        onClick:
+          $$jsExpressionAction: SupprimerLivre.call().then(() => GetLivres.refetch())
+    - component: Button
+      name: buttonDetails
+      props:
+        content: VOIR LES DETAILS
+        onClick:
+          $$jsExpressionAction: GetDetailsLivre.call()
+        disabled:
+          $$jsExpression: ListeDeLivre.selection == null
+    - component: Text
+      name: textDetailLivre
+      props:
+        value: Details du livre
+        variant: h4
+      layout:
+        horizontalAlign: center
+    - component: TextField
+      name: TitreLivre
+      props:
+        label: Titre
+        defaultValue:
+          $$jsExpression: GetDetailsLivre.data.livre.titre
+    - component: TextField
+      name: AuteurLivre
+      props:
+        label: Auteur
+        defaultValue:
+          $$jsExpression: GetDetailsLivre.data.livre.auteur
+    - component: TextField
+      name: IsbnLivre
+      props:
+        label: ISBN
+        defaultValue:
+          $$jsExpression: GetDetailsLivre.data.livre.isbn
+    - component: TextField
+      name: DescriptionLivre
+      props:
+        label: Description
+        defaultValue:
+          $$jsExpression: GetDetailsLivre.data.livre.description
+        fullWidth: true
+    - component: TextField
+      name: DateAjout
+      props:
+        label: Date Ajout
+        defaultValue:
+          $$jsExpression: "GetDetailsLivre.data.livre.date_ajout ? GetDetailsLivre.data.livre.date_ajout.split('T')[0] : ''"
+        disabled: true
+    - component: TextField
+      name: Disponible
+      props:
+        disabled: true
+        label: Statut
+        defaultValue:
+          $$jsExpression:
+            "GetDetailsLivre.data.livre.disponible ? 'disponible' :
+            'indisponible'"
+    - component: Button
+      name: buttonModifierLivre
+      props:
+        content: Modifier le livre
+        onClick:
+          $$jsExpressionAction: ModifierLivre.call().then(() => { GetLivres.refetch(); GetDetailsLivre.call(); })
+        disabled:
+          $$jsExpression: ListeDeLivre.selection == null
+    - component: Select
+      name: SelectStatutLivre
+      props:
+        label: Nouveau statut
+        defaultValue: 'true'
+        options:
+          - value: 'true'
+            label: Disponible
+          - value: 'false'
+            label: Indisponible
+    - component: Button
+      name: buttonModifierStatut
+      props:
+        content: Modifier le statut
+        disabled:
+          $$jsExpression: ListeDeLivre.selection == undefined
+        onClick:
+          $$jsExpressionAction: ModifierStatutLivre.call().then(() => { GetLivres.refetch(); GetDetailsLivre.call(); })
+    - component: DataGrid
+      name: ListePrets
+      props:
+        rows:
+          $$jsExpression: "GetDetailsLivre.data == null ? [] : GetDetailsLivre.data.livre.prets"
+        columns:
+          - field: id
+            type: number
+            width: 52
+          - field: emprunteur
+            type: string
+            width: 254
+          - field: date_debut
+            type: string
+            width: 235
+          - field: date_retour
+            type: string
+            width: 245
+          - field: en_cours
+            type: boolean
+            width: 144
+    - component: Text
+      name: SectionPrets
+      props:
+        value: Section Prêts
+        variant: h1
+      layout:
+        verticalAlign: center
+        horizontalAlign: center
+    - component: Text
+      name: TextAjouterPret
+      props:
+        value: Ajouter un prêt
+        variant: h4
+      layout:
+        horizontalAlign: start
+        verticalAlign: end
+    - component: Button
+      name: buttonRafraichirDisponibles
+      props:
+        content: Rafraîchir les livres disponibles
+        onClick:
+          $$jsExpressionAction: GetLivresDisponibles.refetch()
+    - component: Select
+      name: selectListeLivreDisponible
+      props:
+        label: Livre à emprunter
+        fullWidth: true
+        options:
+          $$jsExpression:
+            "(GetLivresDisponibles.data.livres || []).map(l => ({ value:
+            l.id, label: l.titre }))"
+    - component: TextField
+      name: AjouterEmprunteur
+      props:
+        label: Emprunteur
+        isRequired: true
+    - component: TextField
+      name: AjouterDateDebut
+      props:
+        label: "Date de début (AAAA-MM-JJ)"
+        isRequired: true
+    - component: DatePicker
+      name: AjouterDateRetourPrevu
+      props:
+        label: Date de retour prévue
+    - component: Button
+      name: ButtonAjouterPret
+      props:
+        content: Ajouter le prêt
+        disabled:
+          $$jsExpression:
+            "!selectListeLivreDisponible.value || !AjouterEmprunteur.value
+            || !AjouterDateRetourPrevu.value"
+        onClick:
+          $$jsExpressionAction:
+            AjouterPret.call().then(() => { GetDetailsLivre.call();
+            GetLivresDisponibles.refetch(); })
+    - component: Text
+      name: TextDetailsPretSelectionne
+      props:
+        value: Détails du prêt sélectionné
+        variant: h4
+    - component: TextField
+      name: DetailEmprunteur
+      props:
+        label: Emprunteur
+        disabled: true
+        defaultValue:
+          $$jsExpression: ListePrets.selection.emprunteur
+    - component: TextField
+      name: DetailDateDebut
+      props:
+        label: Date de début
+        disabled: true
+        defaultValue:
+          $$jsExpression: "ListePrets.selection.date_debut ? ListePrets.selection.date_debut.split('T')[0] : ''"
+    - component: TextField
+      name: DetailDateRetour
+      props:
+        label: Date de retour prévue
+        disabled: true
+        defaultValue:
+          $$jsExpression: "ListePrets.selection.date_retour ? ListePrets.selection.date_retour.split('T')[0] : 'Non retourné'"
+    - component: TextField
+      name: DetailStatut
+      props:
+        label: Statut
+        disabled: true
+        defaultValue:
+          $$jsExpression: "ListePrets.selection.en_cours ? 'En cours' : 'Terminé'"
+    - component: Text
+      name: TextModifierPret
+      props:
+        value: Modifier un prêt sélectionné
+        variant: h4
+    - component: TextField
+      name: ModifierEmprunteur
+      props:
+        label: Emprunteur
+        defaultValue:
+          $$jsExpression: ListePrets.selection.emprunteur
+    - component: TextField
+      name: ModifierDateDebut
+      props:
+        label: "Date de début (AAAA-MM-JJ)"
+        defaultValue:
+          $$jsExpression: "ListePrets.selection.date_debut ? ListePrets.selection.date_debut.split('T')[0] : ''"
+    - component: DatePicker
+      name: ModifierDateRetourPrevue
+      props:
+        label: Nouvelle date de retour
+    - component: Button
+      name: ButtonModifierPret
+      props:
+        content: Modifier le prêt
+        disabled:
+          $$jsExpression:
+            ListePrets.selection == null || !ModifierEmprunteur.value
+        onClick:
+          $$jsExpressionAction: ModifierPret.call().then(() => GetDetailsLivre.call())
+    - component: Select
+      name: SelectStatutPret
+      props:
+        label: Statut du prêt
+        defaultValue: termine
+        options:
+          - value: termine
+            label: Terminé
+          - value: en_cours
+            label: En cours
+    - component: Button
+      name: ButtonModifierStatutPret
+      props:
+        content: Modifier le statut du prêt
+        disabled:
+          $$jsExpression: ListePrets.selection == null
+        onClick:
+          $$jsExpressionAction: ModifierStatutPret.call().then(() => {
+            GetDetailsLivre.call(); GetLivresDisponibles.refetch(); })
+    - component: Button
+      name: ButtonSupprimerPret
+      props:
+        content: Supprimer le prêt
+        disabled:
+          $$jsExpression: ListePrets.selection == null
+        onClick:
+          $$jsExpressionAction:
+            SupprimerPret.call().then(() => { GetDetailsLivre.call();
+            GetLivresDisponibles.refetch(); })
+  queries:
+    - name: GetLivres
+      mode: query
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            `${parameters.API_HOST}/api/livres${parameters.tous === 'true' ? '?tous=true' : ''}`
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: "`${parameters.API_KEY}`"
+        method: GET
+        searchParams: []
+      parameters:
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+        - name: tous
+          value:
+            $$jsExpression: "checkboxAfficherTousLesLivres.checked ? 'true' : 'false'"
+
+    - name: GetLivresDisponibles
+      mode: query
+      query:
+        kind: rest
+        url:
+          $$jsExpression: "`${parameters.API_HOST}/api/livres`"
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: parameters.API_KEY
+        method: GET
+        searchParams: []
+      parameters:
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+
+    - name: GetDetailsLivre
+      mode: mutation
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            `${parameters.API_HOST}/api/livres/${parameters.livreId}`
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: parameters.API_KEY
+        method: GET
+        searchParams: []
+      parameters:
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+        - name: livreId
+          value:
+            $$jsExpression: ListeDeLivre.selection.id
+
+    - name: AjouterLivre
+      mode: mutation
+      query:
+        kind: rest
+        url:
+          $$jsExpression: "`${parameters.API_HOST}/api/livres`"
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: "`${parameters.API_KEY}`"
+        method: POST
+        body:
+          kind: raw
+          content:
+            $$jsExpression: >-
+              JSON.stringify({
+                "titre": parameters.titre,
+                "auteur": parameters.auteur,
+                "isbn": parameters.isbn,
+                "description": parameters.description || null
+              })
+          contentType: application/json
+        searchParams: []
+      parameters:
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+        - name: titre
+          value:
+            $$jsExpression: AjouterTitre.value
+        - name: isbn
+          value:
+            $$jsExpression: AjouterIsbn.value
+        - name: auteur
+          value:
+            $$jsExpression: AjouterAuteur.value
+        - name: description
+          value:
+            $$jsExpression: AjouterDescription.value
+
+    - name: ModifierLivre
+      mode: mutation
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            `${parameters.API_HOST}/api/livres/${parameters.livreId}`
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: parameters.API_KEY
+        method: PUT
+        body:
+          kind: raw
+          content:
+            $$jsExpression: >-
+              JSON.stringify({
+                "titre": parameters.titre,
+                "auteur": parameters.auteur,
+                "isbn": parameters.isbn,
+                "description": parameters.description || null
+              })
+          contentType: application/json
+        searchParams: []
+      parameters:
+        - name: titre
+          value:
+            $$jsExpression: TitreLivre.value
+        - name: auteur
+          value:
+            $$jsExpression: AuteurLivre.value
+        - name: isbn
+          value:
+            $$jsExpression: IsbnLivre.value
+        - name: description
+          value:
+            $$jsExpression: DescriptionLivre.value
+        - name: livreId
+          value:
+            $$jsExpression: ListeDeLivre.selection.id
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+
+    - name: ModifierStatutLivre
+      mode: mutation
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            `${parameters.API_HOST}/api/livres/${parameters.livreId}/statut`
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: parameters.API_KEY
+        method: PATCH
+        searchParams: []
+        body:
+          kind: raw
+          content:
+            $$jsExpression: >-
+              JSON.stringify({ "disponible": parameters.statut })
+          contentType: application/json
+      parameters:
+        - name: livreId
+          value:
+            $$jsExpression: ListeDeLivre.selection.id
+        - name: statut
+          value:
+            $$jsExpression: SelectStatutLivre.value === 'true'
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+
+    - name: SupprimerLivre
+      mode: mutation
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            `${parameters.API_HOST}/api/livres/${parameters.livreId}`
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: parameters.API_KEY
+        method: DELETE
+        searchParams: []
+      parameters:
+        - name: livreId
+          value:
+            $$jsExpression: ListeDeLivre.selection.id
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+
+    - name: AjouterPret
+      mode: mutation
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            `${parameters.API_HOST}/api/livres/${parameters.livreId}/prets`
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: parameters.API_KEY
+        method: POST
+        body:
+          kind: raw
+          content:
+            $$jsExpression: >-
+              JSON.stringify({
+                "emprunteur": parameters.emprunteur,
+                "date_debut": parameters.dateDebut,
+                "date_retour": parameters.dateRetour
+              })
+          contentType: application/json
+        searchParams: []
+      parameters:
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+        - name: livreId
+          value:
+            $$jsExpression: selectListeLivreDisponible.value
+        - name: emprunteur
+          value:
+            $$jsExpression: AjouterEmprunteur.value
+        - name: dateDebut
+          value:
+            $$jsExpression: AjouterDateDebut.value
+        - name: dateRetour
+          value:
+            $$jsExpression: "AjouterDateRetourPrevu.value ? new Date(AjouterDateRetourPrevu.value).toISOString().split('T')[0] : null"
+
+    - name: ModifierPret
+      mode: mutation
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            `${parameters.API_HOST}/api/prets/${parameters.pretId}`
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: parameters.API_KEY
+        method: PUT
+        body:
+          kind: raw
+          content:
+            $$jsExpression: >-
+              JSON.stringify({
+                "emprunteur": parameters.emprunteur,
+                "date_debut": parameters.dateDebut,
+                "date_retour": parameters.dateRetour
+              })
+          contentType: application/json
+        searchParams: []
+      parameters:
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+        - name: pretId
+          value:
+            $$jsExpression: ListePrets.selection.id
+        - name: emprunteur
+          value:
+            $$jsExpression: ModifierEmprunteur.value
+        - name: dateDebut
+          value:
+            $$jsExpression: ModifierDateDebut.value
+        - name: dateRetour
+          value:
+            $$jsExpression: "ModifierDateRetourPrevue.value ? new Date(ModifierDateRetourPrevue.value).toISOString().split('T')[0] : null"
+
+    - name: ModifierStatutPret
+      mode: mutation
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            `${parameters.API_HOST}/api/prets/${parameters.pretId}/statut`
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: parameters.API_KEY
+        method: PATCH
+        body:
+          kind: raw
+          content:
+            $$jsExpression: >-
+              JSON.stringify({ "statut": parameters.statut })
+          contentType: application/json
+        searchParams: []
+      parameters:
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+        - name: pretId
+          value:
+            $$jsExpression: ListePrets.selection.id
+        - name: statut
+          value:
+            $$jsExpression: SelectStatutPret.value
+
+    - name: SupprimerPret
+      mode: mutation
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            `${parameters.API_HOST}/api/prets/${parameters.pretId}`
+        headers:
+          - name: x-api-key
+            value:
+              $$jsExpression: parameters.API_KEY
+        method: DELETE
+        searchParams: []
+      parameters:
+        - name: API_HOST
+          value:
+            $$env: TOOLPAD_API_HOST
+        - name: API_KEY
+          value:
+            $$env: TOOLPAD_API_KEY
+        - name: pretId
+          value:
+            $$jsExpression: ListePrets.selection.id

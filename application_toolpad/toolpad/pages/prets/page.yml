@@ -1,0 +1,227 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mui/toolpad/v0.13.0/docs/schemas/v1/definitions.json#properties/Page
+
+apiVersion: v1
+kind: page
+spec:
+  title: "Gestion des Prêts"
+  alias:
+    - PRETS1
+  queries:
+    - name: getPretsDuLivre
+      mode: query
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            'https://bibliotheque-api-1ikd.onrender.com/api/livres/' +
+            livreIdInput.value
+        headers:
+          - name: x-api-key
+            value: b9f4e61d06f621ef94947fe298309a
+        method: GET
+        transform: return data.livre?.prets ?? [];
+        transformEnabled: true
+        searchParams: []
+
+    - name: ajouterPret
+      mode: query
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            'https://bibliotheque-api-1ikd.onrender.com/api/livres/' +
+            livreIdInput.value + '/prets'
+        headers:
+          - name: x-api-key
+            value: b9f4e61d06f621ef94947fe298309a
+        body:
+          kind: raw
+          content:
+            $$jsExpression: >-
+              JSON.stringify({ emprunteur: emprunteurInput.value, date_debut:
+              dateDebutInput.value, date_retour: dateRetourInput.value })
+          contentType: application/json
+        method: POST
+        searchParams: []
+
+    - name: modifierPret
+      mode: query
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            'https://bibliotheque-api-1ikd.onrender.com/api/prets/' +
+            idPretInput.value
+        headers:
+          - name: x-api-key
+            value: b9f4e61d06f621ef94947fe298309a
+        body:
+          kind: raw
+          content:
+            $$jsExpression: >-
+              JSON.stringify({ emprunteur: emprunteurModifInput.value,
+              date_debut: dateDebutModifInput.value, date_retour:
+              dateRetourModifInput.value })
+          contentType: application/json
+        method: PUT
+        searchParams: []
+
+    - name: modifierStatutPret
+      mode: query
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            'https://bibliotheque-api-1ikd.onrender.com/api/prets/' +
+            idPretInput.value + '/statut'
+        headers:
+          - name: x-api-key
+            value: b9f4e61d06f621ef94947fe298309a
+        body:
+          kind: raw
+          content:
+            $$jsExpression: >-
+              JSON.stringify({ statut: statutInput.value })
+          contentType: application/json
+        method: PATCH
+        searchParams: []
+
+    - name: supprimerPret
+      mode: query
+      query:
+        kind: rest
+        url:
+          $$jsExpression: >-
+            'https://bibliotheque-api-1ikd.onrender.com/api/prets/' +
+            idPretInput.value
+        headers:
+          - name: x-api-key
+            value: b9f4e61d06f621ef94947fe298309a
+        method: DELETE
+        searchParams: []
+
+  content:
+    - component: Text
+      name: titre1
+      props:
+        value: "Gestion des Prêts"
+        variant: h4
+
+    - component: TextField
+      name: livreIdInput
+      props:
+        label: ID du livre
+
+    - component: Button
+      name: btnVoirPrets
+      props:
+        content: "Voir les prêts"
+        onClick:
+          $$jsExpressionAction: getPretsDuLivre.refetch()
+
+    - component: DataGrid
+      name: dataGridPrets
+      props:
+        rows:
+          $$jsExpression: getPretsDuLivre.data ?? []
+        columns:
+          - field: id
+            type: number
+            width: 60
+          - field: livre_id
+            type: number
+            width: 80
+          - field: emprunteur
+            type: string
+            width: 180
+          - field: date_debut
+            type: dateTime
+            width: 120
+          - field: date_retour
+            type: dateTime
+            width: 130
+          - field: en_cours
+            type: boolean
+            width: 90
+
+    - component: Text
+      name: titre2
+      props:
+        value: "Ajouter un prêt"
+        variant: h6
+
+    - component: TextField
+      name: emprunteurInput
+      props:
+        label: Emprunteur
+
+    - component: TextField
+      name: dateDebutInput
+      props:
+        label: "Date début (AAAA-MM-JJ)"
+
+    - component: TextField
+      name: dateRetourInput
+      props:
+        label: "Date retour (AAAA-MM-JJ)"
+
+    - component: Button
+      name: btnAjouter
+      props:
+        content: "Ajouter le prêt"
+        onClick:
+          $$jsExpressionAction: ajouterPret.refetch()
+
+    - component: Text
+      name: titre3
+      props:
+        value: "Modifier / Supprimer / Statut"
+        variant: h6
+
+    - component: TextField
+      name: idPretInput
+      props:
+        label: "ID du prêt"
+
+    - component: TextField
+      name: emprunteurModifInput
+      props:
+        label: Emprunteur
+
+    - component: TextField
+      name: dateDebutModifInput
+      props:
+        label: "Date début"
+
+    - component: TextField
+      name: dateRetourModifInput
+      props:
+        label: "Date retour"
+
+    - component: Button
+      name: btnModifier
+      props:
+        content: Modifier
+        onClick:
+          $$jsExpressionAction: modifierPret.refetch()
+
+    - component: Button
+      name: btnSupprimer
+      props:
+        content: Supprimer
+        color: error
+        onClick:
+          $$jsExpressionAction: supprimerPret.refetch()
+
+    - component: TextField
+      name: statutInput
+      props:
+        label: "Statut (termine/en_cours)"
+
+    - component: Button
+      name: btnStatut
+      props:
+        content: Changer statut
+        color: warning
+        onClick:
+          $$jsExpressionAction: modifierStatutPret.refetch()
