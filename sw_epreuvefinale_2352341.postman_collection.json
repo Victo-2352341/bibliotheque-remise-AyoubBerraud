@@ -3,8 +3,7 @@
     "_postman_id": "56b318ec-bf19-477f-b619-35a79163482c",
     "name": "sw_epreuvefinale_2352341",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "_exporter_id": "51577486",
-    "_collection_link": "https://go.postman.co/collection/51577486-56b318ec-bf19-477f-b619-35a79163482c?source=collection_link"
+    "_exporter_id": "51577486"
   },
   "item": [
     {
@@ -19,7 +18,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nom\": \"Ma Bibliothèque\",\n  \"courriel\": \"biblio@exemple.com\",\n  \"password\": \"motdepasse123\"\n}",
+              "raw": "{\n  \"nom\": \"Nouvelle Bibliothèque\",\n  \"courriel\": \"nouvelle@biblio.com\",\n  \"password\": \"motdepasse123\"\n}",
               "options": { "raw": { "language": "json" } }
             },
             "url": {
@@ -40,7 +39,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"courriel\": \"biblio@exemple.com\",\n  \"password\": \"motdepasse123\",\n  \"generer_nouvelle\": false\n}",
+              "raw": "{\n  \"courriel\": \"mabiblio@test.com\",\n  \"password\": \"secret123\",\n  \"generer_nouvelle\": false\n}",
               "options": { "raw": { "language": "json" } }
             },
             "url": {
@@ -61,7 +60,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"courriel\": \"biblio@exemple.com\",\n  \"password\": \"motdepasse123\",\n  \"generer_nouvelle\": true\n}",
+              "raw": "{\n  \"courriel\": \"mabiblio@test.com\",\n  \"password\": \"secret123\",\n  \"generer_nouvelle\": true\n}",
               "options": { "raw": { "language": "json" } }
             },
             "url": {
@@ -83,24 +82,13 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" }
             ],
             "url": {
               "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "livres"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "livres"]
             }
           },
           "response": []
@@ -110,30 +98,14 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" }
             ],
             "url": {
               "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres?tous=true",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "livres"
-              ],
-              "query": [
-                {
-                  "key": "tous",
-                  "value": "true"
-                }
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "livres"],
+              "query": [{ "key": "tous", "value": "true" }]
             }
           },
           "response": []
@@ -143,25 +115,13 @@
           "request": {
             "method": "GET",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" }
             ],
             "url": {
-              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/1",
+              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/2",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "livres",
-                "1"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "livres", "2"]
             }
           },
           "response": []
@@ -171,24 +131,19 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titre\": \"Les Misérables\",\n  \"auteur\": \"Victor Hugo\",\n  \"isbn\": \"978-2-07-040850-4\",\n  \"description\": \"Un roman historique\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
             "url": {
               "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "livres"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "livres"]
             }
           },
           "response": []
@@ -198,25 +153,19 @@
           "request": {
             "method": "PUT",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"titre\": \"Le Seigneur des Anneaux - Édition spéciale\",\n  \"auteur\": \"J.R.R. Tolkien\",\n  \"isbn\": \"978-2-07-061527-2\",\n  \"description\": \"Édition anniversaire\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
             "url": {
-              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/1",
+              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/2",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "livres",
-                "1"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "livres", "2"]
             }
           },
           "response": []
@@ -226,26 +175,19 @@
           "request": {
             "method": "PATCH",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"disponible\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
             "url": {
-              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/1/statut",
+              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/2/statut",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "livres",
-                "1",
-                "statut"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "livres", "2", "statut"]
             }
           },
           "response": []
@@ -255,25 +197,13 @@
           "request": {
             "method": "DELETE",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" }
             ],
             "url": {
-              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/1",
+              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/5",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "livres",
-                "1"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "livres", "5"]
             }
           },
           "response": []
@@ -288,26 +218,19 @@
           "request": {
             "method": "POST",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emprunteur\": \"Jean Dupont\",\n  \"date_debut\": \"2026-05-07\",\n  \"date_retour\": \"2026-06-07\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
             "url": {
-              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/1/prets",
+              "raw": "https://bibliotheque-api-1ikd.onrender.com/api/livres/2/prets",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "livres",
-                "1",
-                "prets"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "livres", "2", "prets"]
             }
           },
           "response": []
@@ -317,25 +240,19 @@
           "request": {
             "method": "PUT",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"emprunteur\": \"Marie Tremblay\",\n  \"date_debut\": \"2026-05-07\",\n  \"date_retour\": \"2026-06-15\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
             "url": {
               "raw": "https://bibliotheque-api-1ikd.onrender.com/api/prets/1",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "prets",
-                "1"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "prets", "1"]
             }
           },
           "response": []
@@ -345,26 +262,19 @@
           "request": {
             "method": "PATCH",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" },
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
             ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"statut\": \"termine\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
             "url": {
               "raw": "https://bibliotheque-api-1ikd.onrender.com/api/prets/1/statut",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "prets",
-                "1",
-                "statut"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "prets", "1", "statut"]
             }
           },
           "response": []
@@ -374,25 +284,13 @@
           "request": {
             "method": "DELETE",
             "header": [
-              {
-                "key": "x-api-key",
-                "value": "b9f4e61d06f621ef94947fe298309a",
-                "type": "text"
-              }
+              { "key": "x-api-key", "value": "b9f4e61d06f621ef94947fe298309a", "type": "text" }
             ],
             "url": {
               "raw": "https://bibliotheque-api-1ikd.onrender.com/api/prets/1",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "prets",
-                "1"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "prets", "1"]
             }
           },
           "response": []
