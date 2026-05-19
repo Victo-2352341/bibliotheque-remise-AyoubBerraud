@@ -14,19 +14,19 @@
           "name": "creerBibliotheque",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nom\": \"Ma Bibliothèque\",\n  \"courriel\": \"biblio@exemple.com\",\n  \"password\": \"motdepasse123\"\n}",
+              "options": { "raw": { "language": "json" } }
+            },
             "url": {
               "raw": "https://bibliotheque-api-1ikd.onrender.com/api/bibliotheques",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "bibliotheques"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "bibliotheques"]
             }
           },
           "response": []
@@ -35,20 +35,19 @@
           "name": "recupererCleApi",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courriel\": \"biblio@exemple.com\",\n  \"password\": \"motdepasse123\",\n  \"generer_nouvelle\": false\n}",
+              "options": { "raw": { "language": "json" } }
+            },
             "url": {
               "raw": "https://bibliotheque-api-1ikd.onrender.com/api/bibliotheques/cle",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "bibliotheques",
-                "cle"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "bibliotheques", "cle"]
             }
           },
           "response": []
@@ -57,20 +56,19 @@
           "name": "genererNouvelleCleApi",
           "request": {
             "method": "POST",
-            "header": [],
+            "header": [
+              { "key": "Content-Type", "value": "application/json", "type": "text" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"courriel\": \"biblio@exemple.com\",\n  \"password\": \"motdepasse123\",\n  \"generer_nouvelle\": true\n}",
+              "options": { "raw": { "language": "json" } }
+            },
             "url": {
               "raw": "https://bibliotheque-api-1ikd.onrender.com/api/bibliotheques/cle",
               "protocol": "https",
-              "host": [
-                "bibliotheque-api-1ikd",
-                "onrender",
-                "com"
-              ],
-              "path": [
-                "api",
-                "bibliotheques",
-                "cle"
-              ]
+              "host": ["bibliotheque-api-1ikd", "onrender", "com"],
+              "path": ["api", "bibliotheques", "cle"]
             }
           },
           "response": []
